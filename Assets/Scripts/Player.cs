@@ -118,6 +118,8 @@ public class Player : MonoBehaviour
 
 	private void CheckIfMustAttack()
 	{
+		//to check for draw
+		bool atLeastOnePieceCanMove = false;
 		if (MovesInCurrentTurn())
 		{
 			for (int i = 0; i < pieces.Count; i++)
@@ -128,28 +130,23 @@ public class Player : MonoBehaviour
 					MustAttack = true;
 					return;
 				}
+				if (pieces[i].CanMove())
+				{
+					atLeastOnePieceCanMove = true;
+				}
 			}
 			MustAttack = false;
 		}
 		else
 		{
 			MustAttack = false;
-		}
-
-		if (pieces.Count <= 0)
-		{
 			return;
 		}
-		//check for draw when no piece can move
-		for (int i = 0; i < pieces.Count; i++)
-		{
-			if (pieces[i].CanMove())
-			{
-				return;
-			}
-		}
 
-		onPlayerDefeated(null);
+		if (pieces.Count > 0 && !atLeastOnePieceCanMove)
+		{
+			onPlayerDefeated(null);
+		}
 	}
 
 
