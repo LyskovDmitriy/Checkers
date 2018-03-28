@@ -52,15 +52,20 @@ public class InputController : MonoBehaviour
 			}
 			else
 			{
+				Debug.Log("Click");
 				if (possibleMoves.Contains(inputCoordinates))
 				{
+					Debug.Log("Possible Move");
 					MoveOrAttack(inputCoordinates);
 				}
 			}
 		}
 		else
 		{
-			UnhighlightCurrentPiece();
+			if (!pieceIsInAttackSequence)
+			{
+				UnhighlightCurrentPiece();
+			}
 		}
 	}
 
@@ -97,12 +102,12 @@ public class InputController : MonoBehaviour
 		//if highlighted piece can attack again, enter attack sequence 
 		if (pieceHasAttackedThisTurn && highlightedPiece.MustAttack())
 		{
-			HighlightPiece(highlightedPiece);
+			CalculatePossibleMoves();
 			pieceIsInAttackSequence = true;
 		}
 		else
 		{
-			//after movement piece doesn't need to be unhighlighted
+			highlightedPiece.UnhighlightPiece();
 			highlightedPiece = null;
 			GameController.Instance.EndTurn();
 		}
@@ -131,6 +136,12 @@ public class InputController : MonoBehaviour
 		UnhighlightCurrentPiece();
 		highlightedPiece = pieceToHighlight;
 		highlightedPiece.HighlightPiece();
+		CalculatePossibleMoves();
+	}
+
+
+	private void CalculatePossibleMoves()
+	{
 		highlightedPiece.GetPossibleMoves(possibleMoves);
 	}
 

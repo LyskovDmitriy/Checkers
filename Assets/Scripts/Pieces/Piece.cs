@@ -34,6 +34,7 @@ public class Piece : BoardMember
 	public void HighlightPiece()
 	{
 		isHighlighted = true;
+		ApplyMaterial(holdingPlayer.highlightedPieceMaterial);
 		if (!startedMovement)
 		{
 			StartCoroutine(Raise());
@@ -44,6 +45,7 @@ public class Piece : BoardMember
 	public void UnhighlightPiece()
 	{
 		isHighlighted = false;
+		ApplyMaterial(holdingPlayer.piecesMaterial);
 		if (!startedMovement)
 		{
 			StartCoroutine(Raise());
@@ -86,7 +88,9 @@ public class Piece : BoardMember
 			isHighlighted = false;
 			StopAllCoroutines();
 		}
-		transform.position = CheckBoard.Instance.BoardToWorldCoordinates(newCoordinates);
+		Vector3 newPosition = CheckBoard.Instance.BoardToWorldCoordinates(newCoordinates);
+		newPosition.y = transform.position.y;
+		transform.position = newPosition;
 
 		if (CheckBoard.Instance.IsAtVerticalBorder(holdingPlayer.Color, cellCoordinates.y))
 		{

@@ -636,6 +636,8 @@ MonoBehaviour:
   piecesPool: {fileID: 2120949549}
   kingsPool: {fileID: 1231018957}
   piecesMaterial: {fileID: 2100000, guid: 59d079f92064dba479d112d37b40ff3c, type: 2}
+  highlightedPieceMaterial: {fileID: 2100000, guid: 83edb666d9fe91b44a8f94dcec567030,
+    type: 2}
   color: 0
 --- !u!1 &409644540
 GameObject:
@@ -838,6 +840,8 @@ MonoBehaviour:
   piecesPool: {fileID: 2120949549}
   kingsPool: {fileID: 1231018957}
   piecesMaterial: {fileID: 2100000, guid: 9838e540a3be4a945adaa35972b42a34, type: 2}
+  highlightedPieceMaterial: {fileID: 2100000, guid: edc81ba2f8bce8841902308dc38e6675,
+    type: 2}
   color: 1
 --- !u!1 &1038168897
 GameObject:

@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 	public ObjectPool piecesPool;
 	public ObjectPool kingsPool;
 	public Material piecesMaterial;
+	public Material highlightedPieceMaterial;
 
 
 	private const int rowsForPieces = 3;
