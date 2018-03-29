@@ -52,10 +52,8 @@ public class InputController : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("Click");
 				if (possibleMoves.Contains(inputCoordinates))
 				{
-					Debug.Log("Possible Move");
 					MoveOrAttack(inputCoordinates);
 				}
 			}
