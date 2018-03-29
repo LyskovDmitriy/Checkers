@@ -5,7 +5,8 @@ using UnityEngine;
 [SelectionBase]
 public class Piece : BoardMember 
 {
-	
+
+	public Coordinates Coordinates { get { return cellCoordinates; } set { cellCoordinates = value; } }
 	public Player HoldingPlayer 
 	{ 
 		get { return holdingPlayer; } 
@@ -22,6 +23,7 @@ public class Piece : BoardMember
 	protected Player holdingPlayer;
 	protected PieceAttack attackComponent;
 	protected PieceMovement movementComponent;
+	protected Coordinates cellCoordinates;
 
 	private const float highlightedY = 0.6f;
 

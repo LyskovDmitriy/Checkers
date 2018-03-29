@@ -185,7 +185,6 @@ public class CheckBoard : MonoBehaviour
 				cellObject.transform.SetParent(transform);
 
 				BoardMember cellInfo = cellObject.GetComponent<BoardMember>();
-				cellInfo.Coordinates = new Coordinates(x, y);
 				Material cellMaterial = ((x + y) % 2 == 0) ? beigeMaterial : brownMaterial;
 				cellInfo.ApplyMaterial(cellMaterial);
 			}
