@@ -31,6 +31,7 @@ public class Piece : BoardMember
 	private Vector3 unhighlightedPosition;
 	private bool isHighlighted;
 	private bool startedMovement;
+	private bool isBeingReplacedWithKing;
 
 
 	public void HighlightPiece()
@@ -46,6 +47,10 @@ public class Piece : BoardMember
 
 	public void UnhighlightPiece()
 	{
+		if (isBeingReplacedWithKing || GameController.Instance.IsGameOver)
+		{
+			return;
+		}
 		isHighlighted = false;
 		ApplyMaterial(holdingPlayer.piecesMaterial);
 		if (!startedMovement)
@@ -93,11 +98,7 @@ public class Piece : BoardMember
 		Vector3 newPosition = CheckBoard.Instance.BoardToWorldCoordinates(newCoordinates);
 		newPosition.y = transform.position.y;
 		transform.position = newPosition;
-
-		if (CheckBoard.Instance.IsAtVerticalBorder(holdingPlayer.Color, cellCoordinates.y))
-		{
-			holdingPlayer.ReplacePieceWithKing(this);
-		}
+		TryPromotePiece();
 	}
 
 
@@ -114,6 +115,12 @@ public class Piece : BoardMember
 		base.Awake();
 		attackComponent = GetComponent<PieceAttack>();
 		movementComponent = GetComponent<PieceMovement>();
+	}
+
+
+	private void OnEnable()
+	{
+		isBeingReplacedWithKing = false;
 	}
 
 
@@ -139,5 +146,16 @@ public class Piece : BoardMember
 		}
 
 		startedMovement = false;
+	}
+
+
+	private void TryPromotePiece()
+	{
+		if (CheckBoard.Instance.IsAtVerticalBorder(holdingPlayer.Color, cellCoordinates.y) 
+			&& (GetComponent<KingAttack>() == null))
+		{
+			holdingPlayer.ReplacePieceWithKing(this);
+			isBeingReplacedWithKing = true;
+		}
 	}
 }
