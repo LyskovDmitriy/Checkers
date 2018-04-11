@@ -92,10 +92,15 @@ public class InputController : MonoBehaviour
 		if (highlightedPiece.HoldingPlayer.MustAttack)
 		{
 			pieceHasAttackedThisTurn = true;
-			CheckBoard.Instance.HandleAttack(highlightedPiece.Coordinates, endCoordinates);
+			Coordinates startingCoordinates = highlightedPiece.Coordinates;
+			highlightedPiece.Move(endCoordinates);
+			CheckBoard.Instance.HandleAttack(startingCoordinates, endCoordinates);
+		}
+		else
+		{
+			highlightedPiece.Move(endCoordinates);
 		}
 
-		highlightedPiece.Move(endCoordinates);
 		possibleMoves.Clear();
 		//if highlighted piece can attack again, enter attack sequence 
 		if (pieceHasAttackedThisTurn && highlightedPiece.MustAttack())

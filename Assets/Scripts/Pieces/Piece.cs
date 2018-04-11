@@ -32,6 +32,7 @@ public class Piece : BoardMember
 	private bool isHighlighted;
 	private bool startedMovement;
 	private bool isBeingReplacedWithKing;
+	private bool canBePromoted;
 
 
 	public void HighlightPiece()
@@ -115,6 +116,7 @@ public class Piece : BoardMember
 		base.Awake();
 		attackComponent = GetComponent<PieceAttack>();
 		movementComponent = GetComponent<PieceMovement>();
+		canBePromoted = (GetComponent<KingAttack>() == null);
 	}
 
 
@@ -151,8 +153,7 @@ public class Piece : BoardMember
 
 	private void TryPromotePiece()
 	{
-		if (CheckBoard.Instance.IsAtVerticalBorder(holdingPlayer.Color, cellCoordinates.y) 
-			&& (GetComponent<KingAttack>() == null))
+		if (canBePromoted && CheckBoard.Instance.IsAtVerticalBorder(holdingPlayer.Color, cellCoordinates.y)) 
 		{
 			holdingPlayer.ReplacePieceWithKing(this);
 			isBeingReplacedWithKing = true;
